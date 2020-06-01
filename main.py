@@ -1,5 +1,5 @@
 import sys
-string = 'ZIOBRO TY KURWO JEBANA ODDAWAJ SPRAEWNOSC MOJEGO KOMPUTERA'
+string = 'JJCBBBBJJ JJBBBEEEE EEEESIIPPP CCJJJJCAA AAA'
 
 class NodeTree(object):
     def __init__(self, left=None, right=None):
