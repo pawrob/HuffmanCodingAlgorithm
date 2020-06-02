@@ -1,5 +1,6 @@
 import sys
-string = 'JJCBBBBJJ JJBBBEEEE EEEESIIPPP CCJJJJCAA AAA'
+string = 'Jebac PiS'
+import bitstring
 
 class NodeTree(object):
     def __init__(self, left=None, right=None):
@@ -42,5 +43,12 @@ while len(nodes) > 1:
 huffmanCode = huffmanCodeTree(nodes[0][0])
 print(' Znak - Kod Huffmana ')
 
-for (char, frequency) in freq:
-    print(' %-3r =%8s' % (char, huffmanCode[char]))
+print(huffmanCode)
+messageToSend = ''
+for char in string:
+    messageToSend = messageToSend + huffmanCode[char]
+print(messageToSend)
+value = bitstring.BitArray(bin='00111100001010')
+#Trzeba value puscic przez gniazdo wraz z dictionary
+#a nastepnie je rozszyfrować po stronie serwera zapewne
+print(value)
