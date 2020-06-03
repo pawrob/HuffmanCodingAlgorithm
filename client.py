@@ -1,6 +1,6 @@
 import socket
 from Node import Node
-'''HEADER = 64
+HEADER = 64
 PORT = 5050
 FORMAT = 'utf-8'
 DISCONNECT_MESSAGE = "!DISCONNECT"
@@ -8,7 +8,7 @@ SERVER = "10.9.25.109"
 ADDR = (SERVER, PORT)
 
 client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-client.connect(ADDR) '''
+client.connect(ADDR)
 
 def send(msg):
     message = msg.encode(FORMAT)
@@ -42,21 +42,67 @@ def codeMessage(message):
             nodes.append( Node( nodes[-1].value + initialNodes[i].value, nodes[-2], nodes[-1] ) )
 
 
+string = 'ZAWSZE I WSZEDZIE POLICJA JEBANA BEDZIE!'
+
+class NodeTree(object):
+    def __init__(self, left=None, right=None):
+        self.left = left
+        self.right = right
+    def children(self):
+        return (self.left, self.right)
+    def nodes(self):
+        return (self.left, self.right)
+    def __str__(self):
+        return '%s_%s' % (self.left, self.right)
+
+def huffmanCodeTree(node, left=True, binString=''):
+    if type(node) is str:
+        return {node: binString}
+    (l, r) = node.children()
+    d = dict()
+    d.update(huffmanCodeTree(l, True, binString + '0'))
+    d.update(huffmanCodeTree(r, False, binString + '1'))
+    return d
+
+freq = {}
+for c in string:
+    if c in freq:
+        freq[c] += 1
+    else:
+        freq[c] = 1
+
+freq = sorted(freq.items(), key=lambda x: x[1], reverse=True)
+nodes = freq
+
+while len(nodes) > 1:
+    (key1, c1) = nodes[-1]
+    (key2, c2) = nodes[-2]
+    nodes = nodes[:-2]
+    node = NodeTree(key1, key2)
+    nodes.append((node, c1 + c2))
+    nodes = sorted(nodes, key=lambda x: x[1], reverse=True)
+
+huffmanCode = huffmanCodeTree(nodes[0][0])
+print(' Znak - Kod Huffmana ')
+
+print(huffmanCode)
+messageToSend = ''
+dictionaryToSend = '/'
+for char in string:
+    messageToSend = messageToSend + huffmanCode[char]
+
+#Przepisanie slownika na string
+for char in huffmanCode :
+    dictionaryToSend = dictionaryToSend + char + ':' + huffmanCode[char] + ','
+
+print(dictionaryToSend)
+print(messageToSend)
+#Trzeba value puscic przez gniazdo wraz z dictionary
+#a nastepnie je rozszyfrować po stronie serwera zapewne
+
+send(dictionaryToSend)
+send(messageToSend)
 
 
-
-
-codeMessage("Kurwaa jaaa pierdolee kurwaa heee")
-
-
-myBytes = bytearray()
-myBytes.append(123)
-myBytes.append(100)
-print(myBytes)
-send("Hello World!")
-input()
-send("Hello Everyone!")
-input()
-send("Hello Bucki!")
 
 send(DISCONNECT_MESSAGE)
