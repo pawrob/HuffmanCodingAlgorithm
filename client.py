@@ -23,7 +23,7 @@ def send(msg): #funkcja osblugujaca wysylanie informacji gniazdem
 nodes = []
 initialNodes = []
 def codeMessage(message): #kodowanie drzewa
-    # ---------SORTOWANKO------------
+    #sortowanie wg czestototliwosci  oraz zlicznie znkaow
     dictionary = {}
     for char in message:
         if not char in dictionary :
@@ -33,9 +33,9 @@ def codeMessage(message): #kodowanie drzewa
 
     sortedDictionary = sorted(dictionary.items(),key=lambda x:x[1])
     print(sortedDictionary)
-    # ----------BUCKOWANKO------------
+
     for char in sortedDictionary :
-        initialNodes.append( Node( sortedDictionary[char] ) )
+        initialNodes.append( Node( sortedDictionary[char] ) ) #tworzenie drzewa
 
     nodes.append(initialNodes[0])
     for i in range ( 1, len(initialNodes) ) :
