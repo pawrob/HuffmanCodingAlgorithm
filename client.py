@@ -43,7 +43,7 @@ def codeMessage(message): #kodowanie drzewa
             nodes.append( Node( nodes[-1].value + initialNodes[i].value, nodes[-2], nodes[-1] ) )
 
 
-string = 'ZAWSZE I WSZEDZIE POLICJA JEBANA BEDZIE!'
+string = 'Algorytm Huffmana działa rewelacyjnie!'
 
 class NodeTree(object):
     def __init__(self, left=None, right=None):
